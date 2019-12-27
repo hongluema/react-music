@@ -5,6 +5,7 @@ import Lazyload, { forceCheck } from 'react-lazyload'
 import Scroll from '../../baseUI/scroll'
 import { connect } from 'react-redux'
 import { actionCreators } from './store'
+import Loading from '../../baseUI/loading'
 import './style.scss'
 import { changePageCount, changeEnterLoading, getSingerList, changePullUpLoading, refreshMoreHotSingerList, refreshMoreSingerList, changePullDownLoading, getHotSingerList } from './store/actionCreators';
 
@@ -26,9 +27,17 @@ function Singers(props) {
         updateDispatch(category, alpha)
     }
 
+    let handlePullUp = () => {
+        pullUpRefreshDispatch(category, alpha, category === '', pageCount)
+    }
+
+    let handlePullDown = () => {
+        pullDownRefreshDispatch(category, alpha, category === '')
+    }
+
 
     useEffect(() => {
-
+        getHotSingerDispatch()
     }, [])
 
     // mock 数据
@@ -42,15 +51,17 @@ function Singers(props) {
 
     // 渲染函数，返回歌手列表
     const renderSingerList = () => {
+        // singerList 还是 immutable 数据结构
+        const list = singerList.size ? singerList.toJS() : []
         return (
             <div className="singer-list">
                 {
-                    singerList.map((item, index) => {
+                    list.map((item, index) => {
                         return (
                             <div className="singer-list-item" key={`${item.accountId}${index}`}>
                                 <div className="img-wrapper">
                                     <div className="decorate"></div>
-                                    <Lazyload placeholder={<img width='100%' height='100%' src={require('../../components/list/music.png')} alt='music' />}>
+                                    <Lazyload placeholder={<img width='100%' height='100%' src={require('./singer.png')} alt='music' />}>
                                         <img src={item.picUrl + "?param=300x300"} alt="music" width="100%" height="100%" />
                                     </Lazyload>
                                 </div>
@@ -71,9 +82,10 @@ function Singers(props) {
             </div>
 
             <div className="singer-list-container">
-                <Scroll onScroll={forceCheck}>
+                <Scroll onScroll={forceCheck} pullUp={handlePullUp} pullDown={handlePullDown} pullUpLoading={pullUpLoading} pullDownLoading={pullDownLoading}>
                     {renderSingerList()}
                 </Scroll>
+                <Loading show={enterLoading}></Loading>
             </div>
         </div>
     )

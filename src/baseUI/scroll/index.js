@@ -1,6 +1,9 @@
-import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import BScroll from 'better-scroll'
+import LoadingV2 from '../loading-v2'
+import Loading from '../loading'
+import { debounce } from '../../api/utils'
 import './style.scss'
 
 const Scroll = forwardRef((props, ref) => {
@@ -10,10 +13,22 @@ const Scroll = forwardRef((props, ref) => {
     const scrollContaninerRef = useRef();
 
     // 解构赋值拿到参数
-    const { direction, click, refresh, bounceTop, bounceBottom } = props;
+    const { direction, click, refresh, bounceTop, bounceBottom, pullUpLoading, pullDownLoading } = props;
     console.log('refresh:', refresh)
     // 解构赋值拿到函数
     const { pullUp, pullDown, onScroll } = props;
+
+    // 将上拉加载逻辑和下拉刷新逻辑给做成防抖的, 利用的写的 debounce 函数
+    // 利用useMomo的浅对比优化性能
+    // 千万注意，这里不能省略依赖，也就是 useMemo 的第二个参数
+    // 不然拿到的始终是第一次 pullUp 函数的引用，相应的闭包作用域变量都是第一次的，产生闭包陷阱。下同。
+    let pullUpDebounce = useMemo(() => {
+        return debounce(pullUp, 1000)
+    }, [pullUp])
+
+    let pullDownDebounce = useMemo(() => {
+        return debounce(pullDown, 1000)
+    }, [pullDown])
 
     // 创建better-scroll, 第二个参数是 [] 代表的就是当组件将被销毁时才进行解绑，这也就实现了componentWillUnmount的生命周期函数 
     useEffect(() => {
@@ -59,7 +74,9 @@ const Scroll = forwardRef((props, ref) => {
         bScroll.on('scrollEnd', () => {
             // 判断是否滑动到了底部
             if (bScroll.y <= bScroll.maxScrollY + 100) {
-                pullUp()
+                // pullUp() // 这个是不防抖的上拉加载逻辑
+                // pullUpDebounce 是防抖的上拉加载逻辑
+                pullUpDebounce()
             }
         });
         return () => {
@@ -74,7 +91,9 @@ const Scroll = forwardRef((props, ref) => {
         bScroll.on('touchEnd', (pos) => {
             // 判断用户的下拉动作
             if (pos.y > 50) {
-                pullDown()
+                // pullDown() // 这个是不防抖的下拉刷新逻辑
+                // pullDownDebounce 是防抖的下拉刷新逻辑
+                pullDownDebounce()
             }
         });
         return () => {
@@ -99,10 +118,22 @@ const Scroll = forwardRef((props, ref) => {
         }
     }));
 
+    // 如果 pullUpLoading 或者 pullDownLoading 为true 就是使用默认样式, 否则就是将元素隐藏
+    // style.display = ""；是清除display样式，display将使用默认值（块元素会变成block，内联元素会变成inline）style.display="none"； 中“none”是一个值，表示元素将隐藏。
+    const PullUpdisplayStyle = pullUpLoading ? { display: "" } : { display: "none" }
+    const PullDowndisplayStyle = pullDownLoading ? { display: "" } : { display: "none" }
 
     return (
         <div className="scroll-wrapper" ref={scrollContaninerRef}>
             {props.children}
+            {/* 滑到底部加载动画 */}
+            <div className="pull-up-loading" style={PullUpdisplayStyle}>
+                <Loading></Loading>
+            </div>
+            {/* 顶部下拉刷新动画 */}
+            <div className="pull-down-loading" style={PullDowndisplayStyle}>
+                <LoadingV2></LoadingV2>
+            </div>
         </div>
     )
 
