@@ -11,6 +11,7 @@ const Scroll = forwardRef((props, ref) => {
 
     // 解构赋值拿到参数
     const { direction, click, refresh, bounceTop, bounceBottom } = props;
+    console.log('refresh:', refresh)
     // 解构赋值拿到函数
     const { pullUp, pullDown, onScroll } = props;
 

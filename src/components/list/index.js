@@ -5,9 +5,9 @@ import { getCount } from '../../api/utils'
 
 function RecommendList(props) {
     return (
-        <div className='list-wrapper'>
-            <h1 className='title'>推荐歌单</h1>
-            <div className="list">
+        <div className='recommend-list-wrapper'>
+            <h1 className='recommend-title'>推荐歌单</h1>
+            <div className="recommend-list">
                 {
                     props.recommendList.map((item, index) => {
                         return (

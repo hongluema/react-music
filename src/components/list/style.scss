@@ -1,15 +1,15 @@
 @import '../../assets/style.scss';
 
-.list-wrapper{
+.recommend-list-wrapper{
     max-width: 100%;
-    .title{
+    .recommend-title{
         font-weight: 700;
         padding-left: 6px;
         font-size: 14px;
         line-height: 60px; 
     }
 
-    .list{
+    .recommend-list{
         width: 100%;
         display: flex;
         flex-direction: row;

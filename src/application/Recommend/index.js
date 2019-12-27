@@ -47,8 +47,8 @@ function Recommend(props) {
     // });
 
     return (
-        <div className="content">
-            <Scroll className='list' onScroll={forceCheck} >
+        <div className="recommend-content">
+            <Scroll onScroll={forceCheck} >
                 <div>
                     <Slider bannerList={bannerListJS}></Slider>
                     <RecommendList recommendList={recommendListJS}></RecommendList>
