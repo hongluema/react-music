@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useContext, useEffect, memo } from 'react';
 import Horizen from '../../baseUI/horizen-item'
 import { categoryTypes, alphaTypes } from '../../api/config'
 import Lazyload, { forceCheck } from 'react-lazyload'

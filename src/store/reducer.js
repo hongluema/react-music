@@ -4,9 +4,11 @@ import { combineReducers } from 'redux-immutable'
 // recommend 的reducer
 import { reducer as recommendReducer } from '../application/Recommend/store'
 import { reducer as singersReducer } from '../application/Singers/store'
+import { reducer as rankReducer } from '../application/Rank/store'
 
 // 根据不同的功能模块区分的 reducer
 export default combineReducers({
     recommend: recommendReducer,
-    singers: singersReducer
+    singers: singersReducer,
+    rank: rankReducer
 })

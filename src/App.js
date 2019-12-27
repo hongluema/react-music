@@ -6,13 +6,16 @@ import { renderRoutes } from 'react-router-config'; // renderRoutes 读取路由
 import { BrowserRouter as Router } from 'react-router-dom';
 import store from './store'
 import { Provider } from 'react-redux'
+import { Data } from './application/Singers/data'
 
 function App() {
   return (
     <div className="App">
       <Provider store={store}>
         <Router>
-          {renderRoutes(routes)}
+          <Data>
+            {renderRoutes(routes)}
+          </Data>
         </Router>
       </Provider>
     </div>
