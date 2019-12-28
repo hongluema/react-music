@@ -16,7 +16,6 @@ export const getRankList = () => {
     return (dispatch) => {
         getRankListRequest().then(res => {
             const data = res && res.list
-            console.log('data', data)
             dispatch(changeRankList(data))
             dispatch(changeLoading(false))
         }).catch((err) => {

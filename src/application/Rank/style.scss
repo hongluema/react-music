@@ -11,12 +11,13 @@
         font-weight: 700;
         font-size: $font-size-m;
         color: $font-color-desc;
-  }
+    }
+
   
     .rank-list{
         margin-top: 10px;
         padding: 0 5px;
-        display: flex;
+        // display: '';
         flex-direction: row;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -42,7 +43,7 @@
                     width: 100%;
                     height: 35px;
                     border-radius: 3px;
-                    background: linear-gradient(hsla (0,0%,100%,0),hsla (0,0%,43%,.4));
+                    background: linear-gradient(rgba(255, 255, 255, 0), rgba(110, 110, 110, 0.4));
                 }
                 img {
                     width: 100%;
@@ -65,9 +66,21 @@
             flex-direction: column;
             justify-content: space-around;
             padding: 10px 10px;
-            >li {
+            >div {
                 font-size: $font-size-s;
                 color: grey;
+            }
+        }
+    }
+
+    // 全球榜的样式，放在下面是为了将上面的 rank-list 样式覆盖
+    .global {
+        display: flex;
+        .rank-list-item{
+            display: "";
+            .img-wrapper{
+                width:  31vw;
+                height: 31vw;
             }
         }
     }

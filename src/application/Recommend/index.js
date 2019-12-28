@@ -6,6 +6,7 @@ import Loading from '../../baseUI/loading';
 import { connect } from 'react-redux'
 import { forceCheck } from 'react-lazyload';
 import * as actionTypes from './store/actionCreators'
+import { renderRoutes } from 'react-router-config'
 import './style.scss'
 
 
@@ -45,7 +46,7 @@ function Recommend(props) {
     //         name: '朴树、许巍、李健、郑钧、老狼、赵雷'
     //     }
     // });
-
+    console.log('props:', props)
     return (
         <div className="recommend-content">
             <Scroll onScroll={forceCheck} >
@@ -55,6 +56,9 @@ function Recommend(props) {
                 </div>
             </Scroll>
             <Loading show={enterLoading}></Loading>
+            {/* 切记，renderRoutes 方法传入参数为路由配置数组，我们在组件中调用这个方法后只能渲染一层路由，再深层的路由就无法渲染，只能在组件中继续配置 */}
+            {/* 还有数组其实取的就是props.route里的一个属性，这个属性的名字取决于你配置的是 routes 还是 children */}
+            {renderRoutes(props.route.children)}
         </div>
     )
 }

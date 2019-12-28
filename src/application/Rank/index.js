@@ -4,13 +4,13 @@ import { connect } from 'react-redux'
 import { filterIndex } from '../../api/utils';
 import Scroll from '../../baseUI/scroll'
 import Loading from '../../baseUI/loading'
+import { renderRoutes } from 'react-router-config';
 import './style.scss'
 
 function Rank(props) {
 
     const { rankList, loading } = props
     const { getRankListDispatch } = props
-    console.log('rankList:', rankList)
     let list = rankList ? rankList.toJS() : []
 
     useEffect(() => {
@@ -39,7 +39,7 @@ function Rank(props) {
             <div className="song-list">
                 {
                     list.map((item, index) => {
-                        return <li key={index}>{index + 1}. {item.first} - {item.second}</li>
+                        return <div key={index}>{index + 1}. {item.first} - {item.second}</div>
                     })
                 }
             </div>
@@ -49,7 +49,7 @@ function Rank(props) {
     // 这是渲染榜单列表函数，传入 global 变量来区分不同的布局方式
     const renderRankList = (list, global) => {
         return (
-            <div className="rank-list" globalRank={global}>
+            <div className={global ? 'rank-list global' : 'rank-list'}>
                 {
                     list.map((item) => {
                         return (
@@ -77,12 +77,15 @@ function Rank(props) {
             <Scroll>
                 <div>
                     <h1 className='offical' style={displayStyle}> 官方榜 </h1>
-                    {renderRankList(officialList)}
+                    {renderRankList(officialList, false)}
                     <h1 className='global' style={displayStyle}> 全球榜 </h1>
-                    {renderRankList(globalList)}
+                    {renderRankList(globalList, true)}
                     {loading ? <Loading></Loading> : null}
                 </div>
             </Scroll>
+            {/* 切记，renderRoutes 方法传入参数为路由配置数组，我们在组件中调用这个方法后只能渲染一层路由，再深层的路由就无法渲染，只能在组件中继续配置 */}
+            {/* 还有数组其实取的就是props.route里的一个属性，这个属性的名字取决于你配置的是 routes 还是 children */}
+            {renderRoutes(props.route.routes)}
         </div>
 
         // </div>
