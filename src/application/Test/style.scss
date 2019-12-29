@@ -1,0 +1,15 @@
+.test-wrapper{
+    /* 也可以通过用相对定位，不脱离文档流，但是需要给height设置一个高度才可以滚动, 假设页面总高度是667px，在距离顶部90px开始直到底部的区域滚动
+    position: relative;
+    height: 577px;
+    top: 90px;
+    bottom: 0;
+    */
+    position: fixed;
+    top: 90px;
+    bottom: 0px;
+    width: 100%;
+    .item{
+        height: 30px;
+    }
+}

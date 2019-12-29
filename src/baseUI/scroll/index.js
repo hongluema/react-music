@@ -59,6 +59,7 @@ const Scroll = forwardRef((props, ref) => {
         // 如果 better-scroll 实例对象不存在或者没有 onScroll事件 就直接返回
         if (!bScroll || !onScroll) return;
         bScroll.on('scroll', (scroll) => {
+            // console.log('scroll:', scroll)
             onScroll(scroll)
         })
         return () => {
@@ -147,8 +148,8 @@ Scroll.propTypes = {
     pullDown: PropTypes.func, // 下拉加载逻辑
     pullUpLoading: PropTypes.bool, // 是否显示上拉 loading 动画
     pullDownLoading: PropTypes.bool, // 是否显示下拉 loading 动画
-    bounceTop: PropTypes.bool, // 当滚动超过上边缘的时候会有一小段回弹动画
-    bounceBottom: PropTypes.bool // 当滚动超过下边缘的时候会有一小段回弹动画
+    bounceTop: PropTypes.bool, // 当滚动超过上边缘的时候会有一小段回弹动画 | 是否支持向上吸顶
+    bounceBottom: PropTypes.bool // 当滚动超过下边缘的时候会有一小段回弹动画 | 是否支持向下吸底
 }
 
 Scroll.defaultProps = {

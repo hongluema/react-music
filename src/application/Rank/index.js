@@ -9,6 +9,8 @@ import './style.scss'
 
 function Rank(props) {
 
+    console.log('rank:', props)
+
     const { rankList, loading } = props
     const { getRankListDispatch } = props
     let list = rankList ? rankList.toJS() : []
@@ -29,8 +31,8 @@ function Rank(props) {
     let globalList = list.slice(globalStartIndex);
 
     // 进入详情
-    const enterDetail = (name) => {
-
+    const enterDetail = (detail) => {
+        props.history.push(`/rank/${detail.id}`)
     }
 
     // 这是渲染歌曲列表函数
@@ -51,9 +53,9 @@ function Rank(props) {
         return (
             <div className={global ? 'rank-list global' : 'rank-list'}>
                 {
-                    list.map((item) => {
+                    list.map((item, index) => {
                         return (
-                            <div className="rank-list-item" key={item.coverImgId} tracks={item.tracks} onClick={() => enterDetail(item.name)} >
+                            <div className="rank-list-item" key={item.coverImgId + index} tracks={item.tracks} onClick={() => enterDetail(item)} >
                                 <div className="img-wrapper">
                                     <img src={item.coverImgUrl} alt="" width='100%' height='100%' />
                                     <div className="decorate"></div>
@@ -84,7 +86,7 @@ function Rank(props) {
                 </div>
             </Scroll>
             {/* 切记，renderRoutes 方法传入参数为路由配置数组，我们在组件中调用这个方法后只能渲染一层路由，再深层的路由就无法渲染，只能在组件中继续配置 */}
-            {/* 还有数组其实取的就是props.route里的一个属性，这个属性的名字取决于你配置的是 routes 还是 children */}
+            {/* 还有数组其实取的就是props.route里的一个属性，这个属性的名字取决于你配置的是 routes 还是 children */}s
             {renderRoutes(props.route.routes)}
         </div>
 

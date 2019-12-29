@@ -32,3 +32,22 @@ export const filterIndex = rankList => {
         }
     }
 };
+
+// 处理歌手列表拼接歌手名字
+export const getName = list => {
+    let str = "";
+    list.map((item, index) => {
+        str += index === 0 ? item.name : "/" + item.name;
+        return item;
+    });
+    return str;
+};
+
+// 判断一个对象是否为空
+/*
+    写这个函数的原因：当页面进入 Ajax 请求还没有获取数据时，currentAlbum 的值为初始态 {}。直到数据异步加载完成，
+    currentAlbum 才会改变，那么在这个过程中，通过 currentAlbum.creator 为 undefined，通过 current.creator.avatarUrl 取值自然会报错。
+    这样的问题在日常开发中非常常见，那怎么避免这个问题？
+    我们需要在渲染前做一个非空对象的判断。
+*/
+export const isEmptyObject = obj => !obj || Object.keys(obj).length === 0;

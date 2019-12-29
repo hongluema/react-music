@@ -7,10 +7,13 @@ import { connect } from 'react-redux'
 import { forceCheck } from 'react-lazyload';
 import * as actionTypes from './store/actionCreators'
 import { renderRoutes } from 'react-router-config'
+import { Switch } from 'react-router-dom';
 import './style.scss'
 
 
 function Recommend(props) {
+    // 设置页面title
+    // document.title = props.route.meta.title
 
     const { bannerList, recommendList, enterLoading } = props
 
@@ -58,7 +61,9 @@ function Recommend(props) {
             <Loading show={enterLoading}></Loading>
             {/* 切记，renderRoutes 方法传入参数为路由配置数组，我们在组件中调用这个方法后只能渲染一层路由，再深层的路由就无法渲染，只能在组件中继续配置 */}
             {/* 还有数组其实取的就是props.route里的一个属性，这个属性的名字取决于你配置的是 routes 还是 children */}
-            {renderRoutes(props.route.children)}
+            <Switch>
+                {renderRoutes(props.route.routes)}
+            </Switch>
         </div>
     )
 }
