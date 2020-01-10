@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import './style.scss'
 
@@ -7,7 +8,8 @@ const Header = React.forwardRef((props, ref) => {
     const { handleClick, title, isMarquess } = props;
     return (
         <div className="header-container" ref={ref}>
-            <i className="iconfont back" onClick={handleClick}>&#xe656;</i>
+            {/* <i className="iconfont back" onClick={handleClick}>&#xe656;</i> */}
+            <i className="iconfont back" onClick={() => props.history.goBack()}>&#xe656;</i>
             {
                 isMarquess ? <marquee><h1>{title}</h1></marquee> : <h1>{title}</h1>
             }
@@ -28,4 +30,4 @@ Header.defaultProps = {
     isMarquess: false
 }
 
-export default memo(Header)
+export default memo(withRouter(Header))

@@ -1,10 +1,12 @@
 import axios from 'axios'
+import React from 'react'
+import { Redirect } from 'react-router-dom'
 
 export const baseUrl = 'http://localhost:4000'
 
 // axios 的实例及拦截器配置
 const axiosInstance = axios.create({
-    baseURL: baseUrl
+    baseURL: baseUrl,
 })
 
 // 请求拦截器
@@ -20,6 +22,9 @@ axiosInstance.interceptors.request.use(
 // 响应拦截器
 axiosInstance.interceptors.response.use(
     response => {
+        console.log('跳转')
+        // 如果需要登录判断的话，可以在这里做跳转路由
+        // window.location.href = '/singers'
         return Promise.resolve(response.data)
     },
     error => {

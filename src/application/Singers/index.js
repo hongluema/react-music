@@ -11,6 +11,8 @@ import { changePageCount, changeEnterLoading, getSingerList, changePullUpLoading
 
 function Singers(props) {
 
+    console.log('props:', props)
+
     const { singerList, enterLoading, pullUpLoading, pullDownLoading, pageCount } = props
     const { getHotSingerDispatch, updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch } = props
 
@@ -35,6 +37,9 @@ function Singers(props) {
         pullDownRefreshDispatch(category, alpha, category === '')
     }
 
+    let enterDetail = (id) => {
+        props.history.push(`/singers/${id}`)
+    }
 
     useEffect(() => {
         getHotSingerDispatch()
@@ -58,7 +63,7 @@ function Singers(props) {
                 {
                     list.map((item, index) => {
                         return (
-                            <div className="singer-list-item" key={`${item.accountId}${index}`}>
+                            <div className="singer-list-item" key={`${item.accountId}${index}`} onClick={() => { enterDetail(item.id) }}>
                                 <div className="img-wrapper">
                                     <div className="decorate"></div>
                                     <Lazyload placeholder={<img width='100%' height='100%' src={require('./singer.png')} alt='music' />}>

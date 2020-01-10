@@ -1,11 +1,17 @@
 import React from 'react';
+import loadable from '../api/loadable'
 import { Redirect } from 'react-router-dom';
 import Home from '../application/Home';
 import Recommend from '../application/Recommend';
-import Singers from '../application/Singers';
+// import Singers from '../application/Singers';
+// import Singers from '../application/Singers';
+import Singer from '../application/Singer';
 import Rank from '../application/Rank';
 import Album from '../application/Album';
 import Test from '../application/Test';
+
+// 异步加载组件
+const Singers = loadable(() => import('../application/Singers'))
 
 const setTitle = (title) => {
     document.title = title
@@ -38,6 +44,11 @@ export default [
         meta: { title: '专辑详情' },
     },
     {
+        path: '/singers/:id',
+        component: Singer,
+        exact: true
+    },
+    {
         path: '/',
         component: Home,
         routes: [
@@ -45,7 +56,7 @@ export default [
                 path: '/',
                 exact: true,
                 render: () => (
-                    <Redirect to={"/recommend"} />
+                    <Redirect to="/recommend" />
                 )
             },
             {

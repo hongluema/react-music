@@ -5,9 +5,14 @@
     top: 90px;
     bottom: 0;
     */
-    position: fixed;
+    // position: fixed;
+    // top: 90px;
+    // bottom: 0px;
+    position: relative;
+    // height: 577px;
+    height: 8rem;
     top: 90px;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
     .item{
         height: 30px;

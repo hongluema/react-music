@@ -1,0 +1,23 @@
+.test-wrapper{
+    height: 8rem /* 75/75 */;
+}
+
+.wrapper{
+    width: calc(100vw - 20px);
+    height: calc(50vw - 10px);
+    background: skyblue;
+    margin: 0 auto;
+}
+
+.one{
+    float: left;  
+    background: red     
+}
+.two{
+    margin: 0 40px ;
+}
+
+.three{
+    float: right;
+    background: green;
+}

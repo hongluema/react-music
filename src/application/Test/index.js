@@ -1,11 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Scroll from '../../baseUI/scroll'
-import './style.scss'
+import Children from './children'
+// import './style.scss'
+import './style.css'
+import Loading from '../../baseUI/loading'
+import LoadingV2 from '../../baseUI/loading-v2'
 
 function Test(props) {
+
+    console.log('屏幕的宽度和高度:', document.documentElement.clientWidth, '-', document.documentElement.clientHeight)
+    console.log('body的宽度和高度:', document.body.clientWidth, '-', document.body.clientHeight)
+    console.log('root的宽度和高度:', document.getElementById('root').clientWidth, '-', document.getElementById('root').clientHeight)
+
+    const [page, setPage] = useState(0)
+
+    const getUserList = (page) => {
+        setPage(page)
+    }
+
     return (
         <div className='test-wrapper'>
-            <Scroll>
+
+            <div className="wrapper">
+                <div className="one">
+                    one
+                </div>
+                <div className="three">
+                    three
+                </div>
+                <div className="two">
+                    two
+                </div>
+
+            </div>
+
+            <Children name='test-children'>
+                nihaoa
+            </Children>
+            <Scroll onScroll={() => { console.log('onscroll ...') }} pullDown={() => { console.log('pull down...') }} pullUp={() => { console.log('pull up...') }} pullUpLoading={true} pullDownLoading={true}>
                 <div>
                     <div className="item">hello1</div>
                     <div className="item">hello2</div>
@@ -70,6 +102,8 @@ function Test(props) {
                     <div className="item">hello100</div>
                 </div>
             </Scroll>
+            {/* {true ? <Loading></Loading> : null}
+            {true ? <LoadingV2></LoadingV2> : null} */}
         </div>
     )
 }
