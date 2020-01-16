@@ -5,7 +5,7 @@ import Loading from '../baseUI/loading'
 export default (loader) => {
     return Loadable({
         loader: loader,
-        loading: Loading
+        loading: <Loading />
     })
 }
 
